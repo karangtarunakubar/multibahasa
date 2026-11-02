@@ -1,0 +1,1258 @@
+<!-- 
+  Modified from the Manual
+  Last updated: 2026-10-02
+  Author : Edo Erpani
+  Licence : Eunoiaverse Digital Teknologi 
+-->
+<!DOCTYPE html>
+<html preferr="http:multibahasa.com" class="kamus_bahasa_daerah" dir="ltr" lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="title">Kamus Daerah Multibahasa - Eunoiaverse</title>
+
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./src/output.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-color: #e0e5ec;
+      --text-main: #3d4852;
+      --text-muted: #718096;
+      --primary: #4f46e5;
+
+      /* Light Neumorphic Shadows */
+      --shadow-flat: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff;
+      --shadow-flat-sm: 4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff;
+      --shadow-pressed: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+      --shadow-pressed-deep: inset 6px 6px 12px #92a1b6, inset -6px -6px 12px #ffffff;
+      --neu-drop: 9px 9px 16px #bebebe, -9px -9px 16px #ffffff;
+      --neu-inset: inset 6px 6px 10px #bebebe, inset -6px -6px 10px #ffffff;
+      --neu-btn: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+      --neu-btn-active: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+    }
+    .dark {
+      --bg-color: #1a1e24;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+
+      /* Dark Neumorphic Shadows */
+      --shadow-flat: 7px 7px 15px #121519, -7px -7px 15px #22272f;
+      --shadow-flat-sm: 4px 4px 8px #121519, -4px -4px 8px #22272f;
+      --shadow-pressed: inset 4px 4px 8px #121519, inset -4px -4px 8px #22272f;
+      --shadow-pressed-deep: inset 6px 6px 12px #0f1115, inset -6px -6px 12px #252b33;
+      --neu-drop: 9px 9px 16px #121519, -9px -9px 16px #22272f;
+      --neu-inset: inset 5px 5px 8px #121519, inset -5px -5px 8px #22272f;
+      --neu-btn: 5px 5px 10px #121519, -5px -5px 10px #22272f;
+      --neu-btn-active: inset 3px 3px 6px #121519, inset -3px -3px 6px #22272f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Utility Neumorphic Classes */
+    .neu-flat {
+      box-shadow: var(--shadow-flat);
+      background: var(--bg-color);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .neu-flat-sm {
+      box-shadow: var(--shadow-flat-sm);
+      background: var(--bg-color);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .neu-pressed {
+      box-shadow: var(--shadow-pressed) !important;
+      background: var(--bg-color);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .neu-pressed-deep {
+      box-shadow: var(--shadow-pressed-deep) !important;
+      background: var(--bg-color);
+    }
+
+    .neu-button {
+      box-shadow: var(--shadow-flat);
+      background: var(--bg-color);
+      transition: all 0.2s ease;
+    }
+
+    .neu-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .neu-button:active {
+      transform: translateY(1px);
+      box-shadow: var(--shadow-pressed);
+    }
+
+    .tab-active-accent {
+      color: #4f46e5;
+    }
+    .dark .tab-active-accent {
+      color: #818cf8;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
+
+    /* Container Main */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .tab-content {
+      display: none;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .tab-content.active {
+      display: flex;
+    }
+
+    .translator-card {
+      background: var(--bg-color);
+      width: 100%;
+      max-width: 760px;
+      border-radius: 24px;
+      box-shadow: var(--neu-drop);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .add-word-trigger {
+      background: var(--bg-color);
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      box-shadow: var(--neu-btn);
+      cursor: pointer;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .add-word-trigger:active {
+      box-shadow: var(--neu-btn-active);
+    }
+
+    .language-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .select-wrapper {
+      flex: 1;
+      position: relative;
+      background: var(--bg-color);
+      border-radius: 12px;
+      box-shadow: var(--neu-inset);
+      display: flex;
+      align-items: center;
+      padding: 2px 12px;
+    }
+
+    .lang-select {
+      width: 100%;
+      padding: 10px 24px 10px 8px;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.95rem;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    .select-wrapper::after {
+      content: '\f107';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: var(--primary);
+      position: absolute;
+      right: 12px;
+      pointer-events: none;
+      font-size: 0.85rem;
+    }
+
+    .lang-select option {
+      color: var(--text-main);
+      background: var(--bg-color);
+    }
+
+    .swap-btn {
+      background: var(--bg-color);
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--neu-btn);
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .swap-btn:active {
+      box-shadow: var(--neu-btn-active);
+    }
+
+    .card-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .text-box-container {
+      background: var(--bg-color);
+      border-radius: 16px;
+      box-shadow: var(--neu-inset);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      border: none;
+      outline: none;
+      resize: none;
+      font-size: 0.98rem;
+      color: var(--text-main);
+      background: transparent;
+    }
+
+    textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .icon-btn {
+      background: var(--bg-color);
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--neu-btn);
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:active {
+      box-shadow: var(--neu-btn-active);
+    }
+
+    .btn-translate {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .btn-audio {
+      color: #10b981;
+      font-weight: 600;
+    }
+
+    .card-footer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card-footer a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-color);
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: var(--neu-drop);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .input-group input {
+      background: var(--bg-color);
+      border: none;
+      outline: none;
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: var(--neu-inset);
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-submit {
+      color: var(--primary);
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      .card-body {
+        grid-template-columns: 1fr;
+      }
+      
+      .language-bar {
+        gap: 8px;
+      }
+
+      .swap-btn {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .translator-card {
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .add-word-trigger {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .icon-btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER NAVBAR -->
+  <header class="sticky top-0 z-50 w-full px-4 sm:px-8 py-4 backdrop-blur-md transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between p-3 sm:p-4 rounded-2xl neu-flat border border-white/20 dark:border-white/5">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group focus:outline-none" aria-label="Eunoiaverse Homepage">
+        <div class="w-10 h-10 rounded-xl neu-flat flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-extrabold text-xl group-hover:scale-105 transition-transform">
+          <img src="logo.png" alt="Logo">
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-lg leading-tight tracking-tight text-slate-800 dark:text-slate-100">Kamus Bahasa Daerah</span>
+          <span class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Platform</span>
+        </div>
+      </a>
+
+      <!-- Navigation Tab Bar (Desktop) -->
+      <div class="hidden md:flex items-center gap-3">
+        <nav class="flex items-center gap-2 p-1.5 rounded-xl neu-pressed border border-black/5 dark:border-white/5" role="tablist" aria-label="Main Navigation">
+          
+          <!-- Tab 1: Donation -->
+          <button 
+            id="tab-donation"
+            onclick="switchTab('donation')" 
+            role="tab" 
+            aria-selected="true"
+            aria-controls="panel-donation"
+            class="tab-btn neu-pressed tab-active-accent flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus:outline-none">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.684a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            <span>Donation</span>
+            <span class="ml-1 px-1.5 py-0.5 text-[10px] rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold">New</span>
+          </button>
+
+          <!-- Tab 2: Book -->
+          <button 
+            id="tab-book"
+            onclick="switchTab('book')" 
+            role="tab" 
+            aria-selected="false"
+            aria-controls="panel-book"
+            class="tab-btn neu-flat text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus:outline-none">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            <span>Kamus</span>
+          </button>
+
+          <!-- Tab 3: Proposal -->
+          <button 
+            id="tab-proposal"
+            onclick="switchTab('proposal')" 
+            role="tab" 
+            aria-selected="false"
+            aria-controls="panel-proposal"
+            class="tab-btn neu-flat text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus:outline-none">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Proposal</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          </button>
+        </nav>
+
+        <!-- Utility Theme Switcher -->
+        <button 
+          onclick="toggleTheme()" 
+          title="Toggle Theme"
+          class="p-2.5 rounded-xl neu-button text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 focus:outline-none"
+          aria-label="Toggle light and dark mode">
+          <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Controls (Hamburger & Theme) -->
+      <div class="flex items-center gap-3 md:hidden">
+        <button 
+          onclick="toggleTheme()" 
+          class="p-2.5 rounded-xl neu-button text-slate-600 dark:text-slate-300 focus:outline-none"
+          aria-label="Toggle Theme">
+          <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+          <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        </button>
+
+        <button 
+          id="mobile-menu-btn"
+          onclick="toggleMobileMenu()" 
+          class="p-2.5 rounded-xl neu-button text-slate-600 dark:text-slate-300 focus:outline-none"
+          aria-label="Toggle Mobile Menu">
+          <svg id="hamburger-icon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="close-icon" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-3 p-4 rounded-2xl neu-flat flex-col gap-2">
+      <button onclick="switchTab('donation')" class="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-slate-700 dark:text-slate-200 hover:bg-indigo-500/10">Donation</button>
+      <button onclick="switchTab('book')" class="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-slate-700 dark:text-slate-200 hover:bg-indigo-500/10">Kamus</button>
+      <button onclick="switchTab('proposal')" class="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-slate-700 dark:text-slate-200 hover:bg-indigo-500/10">Proposal</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER WITH TABS -->
+  <main>
+    <!-- TAB PANEL 1: DONATION (IDR Balance Logic) -->
+    <div id="panel-donation" class="tab-content active">
+      <div class="w-full max-w-2xl bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden transition-all duration-300 text-left">
+          
+        <!-- Header Banner -->
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-6 sm:p-8 text-white relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+            </div>
+            <div class="relative z-10">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/40 text-emerald-100 mb-3 backdrop-blur-md">
+                    <i class="fa-solid fa-shield-heart"></i> Secure & Verified
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Dukung Pelestarian Bahasa</h2>
+                <p class="text-emerald-100 mt-1 text-sm sm:text-base max-w-lg">Kontribusi Anda membantu kami melestarikan bahasa daerah dan mendukung dokumentasi budaya di Kutai Barat.</p>
+            </div>
+        </div>
+
+        <!-- Donation Body Form -->
+        <div class="p-6 sm:p-8 space-y-6">
+
+            <!-- Frequency Selection -->
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Frekuensi Donasi</label>
+                <div class="grid grid-cols-2 gap-3 p-1 bg-slate-100 rounded-2xl">
+                    <button type="button" id="freq-one-time" onclick="setFrequency('one-time')" class="py-2.5 px-4 text-sm font-medium rounded-xl transition-all bg-white text-emerald-700 shadow-sm">Sekali Saja</button>
+                    <button type="button" id="freq-monthly" onclick="setFrequency('monthly')" class="py-2.5 px-4 text-sm font-medium rounded-xl transition-all text-slate-600 hover:text-slate-900">Bulanan <span class="text-xs bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-md ml-1 font-semibold">Hemat 10%</span></button>
+                </div>
+            </div>
+
+            <!-- Donation Tiers (IDR Amounts) -->
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">Pilih Nominal (IDR)</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <button type="button" onclick="selectAmount(50000)" class="tier-btn py-3 px-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 font-bold text-slate-700 hover:text-emerald-600 transition-all text-center group bg-white">
+                        <span class="block text-lg group-hover:scale-105 transition-transform">Rp50rb</span>
+                        <span class="block text-[11px] font-normal text-slate-400 mt-0.5">Sponsor 1 Kata</span>
+                    </button>
+                    <button type="button" onclick="selectAmount(100000)" class="tier-btn py-3 px-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 font-bold text-slate-700 hover:text-emerald-600 transition-all text-center group bg-white">
+                        <span class="block text-lg group-hover:scale-105 transition-transform">Rp100rb</span>
+                        <span class="block text-[11px] font-normal text-slate-400 mt-0.5">Sponsor 3 Kata</span>
+                    </button>
+                    <button type="button" onclick="selectAmount(250000)" class="tier-btn py-3 px-4 rounded-2xl border-2 border-emerald-500 font-bold text-emerald-700 bg-emerald-50/50 transition-all text-center group shadow-sm active-tier" id="tier-250k">
+                        <span class="block text-lg group-hover:scale-105 transition-transform">Rp250rb</span>
+                        <span class="block text-[11px] font-normal text-emerald-600/80 mt-0.5">Dukung 1 Dialek</span>
+                    </button>
+                    <button type="button" onclick="selectAmount(500000)" class="tier-btn py-3 px-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 font-bold text-slate-700 hover:text-emerald-600 transition-all text-center group bg-white">
+                        <span class="block text-lg group-hover:scale-105 transition-transform">Rp500rb</span>
+                        <span class="block text-[11px] font-normal text-slate-400 mt-0.5">Arsip Patron</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Custom Amount Input -->
+            <div>
+                <label for="custom-amount" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Atau Nominal Lain (IDR)</label>
+                <div class="relative rounded-2xl shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 font-bold text-sm">Rp</div>
+                    <input type="number" id="custom-amount" placeholder="Contoh: 75000" oninput="handleCustomInput(this.value)" class="block w-full pl-10 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 font-semibold text-base outline-none transition-all">
+                </div>
+            </div>
+
+            <!-- Payment Method Selection -->
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">Metode Pembayaran</label>
+                <div class="grid grid-cols-3 gap-3">
+                    <button type="button" onclick="selectPayment('qris')" id="pay-qris" class="pay-btn flex flex-col items-center justify-center p-3 rounded-2xl border-2 border-emerald-500 bg-emerald-50/40 text-emerald-700 transition-all">
+                        <i class="fa-solid fa-qrcode text-xl mb-1"></i>
+                        <span class="text-xs font-semibold">QRIS</span>
+                    </button>
+                    <button type="button" onclick="selectPayment('transfer')" id="pay-transfer" class="pay-btn flex flex-col items-center justify-center p-3 rounded-2xl border-2 border-slate-200 hover:border-slate-300 text-slate-600 transition-all bg-white">
+                        <i class="fa-solid fa-building-columns text-xl mb-1 text-indigo-600"></i>
+                        <span class="text-xs font-semibold">Transfer Bank</span>
+                    </button>
+                    <button type="button" onclick="selectPayment('ewallet')" id="pay-ewallet" class="pay-btn flex flex-col items-center justify-center p-3 rounded-2xl border-2 border-slate-200 hover:border-slate-300 text-slate-600 transition-all bg-white">
+                        <i class="fa-solid fa-wallet text-xl mb-1 text-blue-500"></i>
+                        <span class="text-xs font-semibold">E-Wallet</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Permissions & Payment Agreements Section -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500">Otorisasi & Persetujuan Pembayaran</label>
+                
+                <!-- Checkbox 1: Terms and Conditions -->
+                <div class="flex items-start gap-3">
+                    <input type="checkbox" id="perm-terms" class="mt-1 h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+                    <label for="perm-terms" class="text-xs text-slate-600 cursor-pointer select-none">
+                        Saya menyetujui <a href="#" class="text-emerald-600 font-medium hover:underline">Syarat & Ketentuan</a> serta <a href="#" class="text-emerald-600 font-medium hover:underline">Kebijakan Privasi</a> yang berlaku.
+                    </label>
+                </div>
+
+                <!-- Checkbox 2: Recurring/Automatic Billing Authorization -->
+                <div class="flex items-start gap-3" id="recurring-permission-wrapper">
+                    <input type="checkbox" id="perm-recurring" class="mt-1 h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+                    <label for="perm-recurring" class="text-xs text-slate-600 cursor-pointer select-none" id="recurring-permission-label">
+                        Saya menyetujui pemotongan saldo sekali bayar untuk transaksi donasi ini.
+                    </label>
+                </div>
+            </div>
+
+            <!-- Error message container -->
+            <div id="error-alert" class="hidden bg-rose-50 border border-rose-200 text-rose-700 px-4 py-2.5 rounded-xl text-xs font-medium flex items-center gap-2">
+                <i class="fa-solid fa-circle-exclamation text-rose-500"></i>
+                <span id="error-text">Mohon centang persetujuan syarat dan ketentuan untuk melanjutkan.</span>
+            </div>
+
+            <!-- Submit Button & Disclaimer -->
+            <div class="pt-2">
+                <button type="button" onclick="handleDonate()" class="w-full py-4 px-6 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 text-base">
+                    <span>Donasi Sebesar <span id="donate-btn-amount">Rp250.000</span> Sekarang</span>
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+                <p class="text-center text-xs text-slate-400 mt-3 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-lock text-[10px]"></i> Transaksi aman terenkripsi SSL 256-bit.
+                </p>
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB PANEL 2: KAMUS (TRANSLATOR) -->
+    <div id="panel-book" class="tab-content">
+      <div class="translator-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title"></div>
+            <div class="card-subtitle" id="subtitle-info">Kutai Barat & Kalimantan Timur</div>
+          </div>
+          <button class="add-word-trigger" id="openModalBtn">
+            <i class="fa-solid fa-plus"></i> Tambah Kata
+          </button>
+        </div>
+
+        <!-- Dropdown Select Bahasa -->
+        <div class="language-bar">
+          <div class="select-wrapper">
+            <select class="lang-select" id="srcLang" title="Pilih Bahasa Sumber"></select>
+          </div>
+
+          <button class="swap-btn" id="swapBtn" title="Swap Languages">⇄</button>
+
+          <div class="select-wrapper">
+            <select class="lang-select" id="targetLang" title="Pilih Bahasa Tujuan"></select>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Input Text Container -->
+          <div class="text-box-container">
+            <textarea id="sourceText" placeholder="Ketik teks di sini..."></textarea>
+            <div class="actions">
+              <button class="icon-btn btn-audio" id="srcAudioBtn" title="Dengarkan Sumber">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              <button class="icon-btn" id="clearBtn"><i class="fa-solid fa-xmark"></i> Clear</button>
+              <button class="icon-btn btn-translate" id="translateBtn"><i class="fa-solid fa-language"></i> Translate</button>
+            </div>
+          </div>
+
+          <!-- Output Text Container -->
+          <div class="text-box-container">
+            <textarea id="targetText" placeholder="Hasil terjemahan akan muncul di sini..." readonly></textarea>
+            <div class="actions">
+              <button class="icon-btn btn-audio" id="targetAudioBtn" title="Dengarkan Terjemahan">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              <button class="icon-btn" id="copyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <span id="wordCountBadge">Total kata tersimpan: 0</span>
+          <div>
+            Powered by <a href="https://w.wiki/8FLu" target="_blank" rel="noopener noreferrer">Edo Erpani</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB PANEL 3: PROPOSAL -->
+    <div id="panel-proposal" class="tab-content">
+      <div class="translator-card text-left p-6 sm:p-8">
+        <h3 class="text-xl font-bold mb-3">Project Proposal & Documentation</h3>
+        <p class="text-sm text-slate-500 mb-4 leading-relaxed">
+          Eunoiaverse Multilingual Regional Dictionary is a community-driven initiative aimed at safeguarding, preserving, and making indigenous languages in East Kalimantan (such as Tunjung, Benuaq, Kenyah, Bahau, and Kutai) digitally accessible.
+        </p>
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs text-slate-600 space-y-2">
+          <div class="font-semibold text-slate-700">Key Objectives:</div>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Open-source collection of local vocabulary.</li>
+            <li>Real-time browser-based translation tools.</li>
+            <li>Collaborative contributions directly from speakers.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL TAMBAH KATA -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal text-left">
+      <div class="modal-header">
+        <h3>Tambah Kata Baru</h3>
+        <button class="icon-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="input-group">
+        <label for="newWordLanguage">Bahasa Daerah</label>
+        <select id="newWordLanguage" class="lang-select" aria-label="Pilih bahasa kata baru">
+          <option value="tj-TJ">Tunjung</option>
+          <option value="bq-BQ">Benuaq</option>
+          <option value="ky-KY">Kenyah</option>
+          <option value="bh-BH">Bahau</option>
+          <option value="kt-KT">Kutai</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="newWordInput">Kata Daerah</label>
+        <input type="text" id="newWordInput" placeholder="Contoh: Emooq">
+      </div>
+
+      <div class="input-group">
+        <label for="newIndoInput">Terjemahan Indonesia</label>
+        <input type="text" id="newIndoInput" placeholder="Contoh: Tinggi / Panjang">
+      </div>
+
+      <div class="modal-actions">
+        <button class="icon-btn btn-submit" id="saveWordBtn">
+          <i class="fa-solid fa-check"></i> Simpan Kata
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal Notification -->
+  <div id="success-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity">
+      <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+          <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+              <i class="fa-solid fa-check"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-800 mb-1">Terima Kasih!</h3>
+          <p class="text-slate-500 text-sm mb-6" id="success-message">Donasi Anda telah berhasil diproses.</p>
+          <button onclick="closeDonationModal()" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl transition-all">Tutup</button>
+      </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Language options configuration
+    const languages = [
+      { code: 'id-ID', name: 'Indonesia' },
+      { code: 'tj-TJ', name: 'Tunjung' },
+      { code: 'bq-BQ', name: 'Benuaq' },
+      { code: 'ky-KY', name: 'Kenyah' },
+      { code: 'bh-BH', name: 'Bahau' },
+      { code: 'kt-KT', name: 'Kutai' }
+    ];
+
+    // Initial Dictionary Dataset
+    const initialDictionary = [
+    ['Baq', 'Ada'], ['Nya', 'apakah'], ['Nyama', 'apa'], ['Lonya', 'Bagaimana'], ['Menya', 'Kemana'], ['Adi', 'Berapa'], ['Tih', 'Ini'], ['Ito', 'Itu'], ['Dito', 'Disana'], ['Ditih', 'Disini'], ['Dinya', 'Dimana'], ['Encoq', 'Jauh'], ['Totoq', 'Dekat'], ['Emooq', 'Tinggi'], ['Itint', 'Rendah'], ['Moq', 'Panjang'],
+    ['Itit', 'Kecil'], ['Hajaq', 'Besar'], ['Inaq', 'Belum'], ['Soq', 'Sudah'], ['Perangk', 'Panas'], ['Celamp', 'Dingin'], ['Isay', 'Baru'], ['Isay tih', 'Baru ini'], ['Isay nyi', 'Baru saja'], ['Mai', 'Lama'], ['Nemaq', 'Pergi'], ['Diapm', 'Tinggal'], ['Mot', 'Datang'], ['Buru-buru', 'Gagaq'], ['Cepat', 'Jamit'], ['Berdohai', 'Pelan-pelan'], ['Sengket', 'Naik'], ['Mile', 'Turun'], ['Tala', 'Terang'], ['Gelap', 'Gempitaq'], ['Pejai', 'Jelek'], ['Pajiq', 'Baik'], ['Bajik', 'Baik'],
+    ['Mui', 'Tidak'], ['Ewah', 'Iya'], ['Heq', 'Enggak'], ['Lat', 'Bohong'],
+    ['Hitam', 'Permaq'], ['Biru', 'Nahum'], ['Bohongq', 'Merah'], ['Putiq', 'Putih'],
+    ['Bueh', 'Satu'], ['Regaq', 'Dua'], ['Teluq', 'Tiga'], ['Pat', 'Empat'], ['Limaq', 'Lima'], ['Hagant', 'Enam'], ['Tucuq', 'Tujuh'], ['Kalungk', 'Delapan'], ['Setiant', 'Sembilan'], ['Sawangk', 'Sepuluh'],
+    ['Belas', 'Sebelas'], ['Cahatu', 'Seratus'], ['Ribu', 'Seribu'], ['Juta', 'Sejuta'], ['Gari', 'Adik'], ['Mpom Lihaq', 'Kakek'], ['Mpom Waweq', 'Nenek'], ['Ucuq', 'Paman'],
+    ['Wanaq', 'Suami'], ['Sagaq', 'Istri'], ['Akuq', 'Aku'], ['Koi', 'Kamu'], ['Kamiq', 'Kami'], ['Tai', 'Kita'], ['Kamp', 'Kalian'], ['Eraq', 'Mereka'], ['Ulunt', 'Orang'],
+    ['Mersiaq', 'Manusia'], ['Ulunt Pelagaq', 'Orang Tua'], ['Pelegaq Mai', 'Leluhur'], ['Pelegaq', 'Tua'], ['Kabant Tuhiq', 'Anak-anak'], ['Tuhiq', 'Anak'], ['Encunt', 'Cucu'], ['Mulai', 'Mulai'], ['Tagaq', 'Tertawa'], ['Nangi', 'Menangis'], ['Tiro', 'Tidur'], ['Kuman', 'Makan'], ['Muruq', 'Minum'], ['Bejalan', 'Ngedot'], ['teliuq', 'Berlari'], ['Ngaweng', 'Memanjat'], ['Tepatiiq', 'Melompat'], ['Nulis', 'Menulis'], ['Maca', 'Membaca'],
+    ['Angka', 'Kira-kira'], ['Angkake', 'Kiranya'], ['Angkai', 'Bangkai'], ['Laitn', 'Lain'], ['Laoq', 'Lapar'], ['Lea', 'Bosan'], ['Loah', 'Mual'],
+    ['Loaaq', 'Lemak'], ['Loan', 'Lemak'], ['Loseeu', 'Longgar'], ['Luuok', 'Lubang'], ['Nau', 'Hari'], ['Dilau', 'Besok'], ['Telamaq', 'Depan'], ['Lituq', 'Belakang'], ['Ulant', 'Bulan'], ['Taont', 'Tahun'], ['Mentiuuq', 'Bunuh diri'], ['Meraiq', 'Melerai'],
+    ['Nerdaatn', 'Berterus terang'], ['Jaur', 'Kabur'], ['Keliuq', 'Keracunan'], ['Nguit', 'Menyukit'], ['Leler-maer', 'Tidak Terurus'], ['Tertimpa', 'Keluatn']
+    ];
+
+    // State Variables (Updated default amount to 250000 IDR)
+    let activeDictionary = [];
+    let currentAmount = 250000;
+    let currentFrequency = 'one-time';
+    let currentPayment = 'qris';
+
+    // DOM Elements
+    const srcLangSelect = document.getElementById('srcLang');
+    const targetLangSelect = document.getElementById('targetLang');
+    const sourceText = document.getElementById('sourceText');
+    const targetText = document.getElementById('targetText');
+    const swapBtn = document.getElementById('swapBtn');
+    const translateBtn = document.getElementById('translateBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const wordCountBadge = document.getElementById('wordCountBadge');
+    
+    // Modal Elements
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const saveWordBtn = document.getElementById('saveWordBtn');
+    const newWordLanguage = document.getElementById('newWordLanguage');
+    const newWordInput = document.getElementById('newWordInput');
+    const newIndoInput = document.getElementById('newIndoInput');
+
+    // Initialize App
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDictionary();
+      populateLanguageSelects();
+      setupEventListeners();
+      updateWordCount();
+    });
+
+    // Load dictionary from localStorage or default
+    function loadDictionary() {
+      const stored = localStorage.getItem('eunoia_dictionary');
+      if (stored) {
+        try {
+          activeDictionary = JSON.parse(stored);
+        } catch (e) {
+          activeDictionary = [...initialDictionary];
+        }
+      } else {
+        activeDictionary = [...initialDictionary];
+        saveDictionary();
+      }
+    }
+
+    function saveDictionary() {
+      localStorage.setItem('eunoia_dictionary', JSON.stringify(activeDictionary));
+      updateWordCount();
+    }
+
+    function updateWordCount() {
+      wordCountBadge.textContent = `Total kata tersimpan: ${activeDictionary.length}`;
+    }
+
+    // Populate Select Options
+    function populateLanguageSelects() {
+      srcLangSelect.innerHTML = '';
+      targetLangSelect.innerHTML = '';
+
+      languages.forEach((lang) => {
+        const opt1 = new Option(lang.name, lang.code);
+        const opt2 = new Option(lang.name, lang.code);
+        srcLangSelect.add(opt1);
+        targetLangSelect.add(opt2);
+      });
+
+      srcLangSelect.value = 'id-ID';
+      targetLangSelect.value = 'tj-TJ';
+    }
+
+    // Translation Engine Logic
+    function translate() {
+      const query = sourceText.value.trim();
+      if (!query) {
+        targetText.value = '';
+        return;
+      }
+
+      const fromLang = srcLangSelect.value;
+      const toLang = targetLangSelect.value;
+
+      if (fromLang === toLang) {
+        targetText.value = sourceText.value;
+        return;
+      }
+
+      const tokens = query.split(/(\s+|[^\p{L}\p{N}\s])/gu);
+      const translatedTokens = tokens.map((token) => {
+        const cleanToken = token.trim();
+        if (!cleanToken || /[^\p{L}\p{N}]/u.test(cleanToken)) return token;
+
+        const entry = activeDictionary.find(
+          (item) => item[fromLang] && item[fromLang].toLowerCase() === cleanToken.toLowerCase()
+        );
+
+        if (entry && entry[toLang]) {
+          return entry[toLang];
+        }
+
+        return cleanToken;
+      });
+
+      targetText.value = translatedTokens.join('');
+    }
+
+    // Setup Event Listeners
+    function setupEventListeners() {
+      sourceText.addEventListener('input', translate);
+      srcLangSelect.addEventListener('change', translate);
+      targetLangSelect.addEventListener('change', translate);
+
+      swapBtn.addEventListener('click', () => {
+        const temp = srcLangSelect.value;
+        srcLangSelect.value = targetLangSelect.value;
+        targetLangSelect.value = temp;
+
+        const tempText = sourceText.value;
+        sourceText.value = targetText.value;
+        targetText.value = tempText;
+
+        translate();
+      });
+
+      translateBtn.addEventListener('click', translate);
+      clearBtn.addEventListener('click', () => {
+        sourceText.value = '';
+        targetText.value = '';
+      });
+
+      copyBtn.addEventListener('click', async () => {
+        if (!targetText.value) return;
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(targetText.value);
+          } else {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = targetText.value;
+            tempInput.setAttribute('readonly', '');
+            tempInput.style.position = 'fixed';
+            tempInput.style.opacity = '0';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+          }
+
+          const origText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+          setTimeout(() => (copyBtn.innerHTML = origText), 1800);
+        } catch (error) {
+          const origText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Failed';
+          setTimeout(() => (copyBtn.innerHTML = origText), 1800);
+        }
+      });
+
+      document.getElementById('srcAudioBtn').addEventListener('click', () => speakText(sourceText.value, srcLangSelect.value));
+      document.getElementById('targetAudioBtn').addEventListener('click', () => speakText(targetText.value, targetLangSelect.value));
+
+      openModalBtn.addEventListener('click', () => modalOverlay.classList.add('active'));
+      closeModalBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+      });
+
+      saveWordBtn.addEventListener('click', () => {
+        const lang = newWordLanguage.value;
+        const regionalWord = newWordInput.value.trim().toLowerCase();
+        const indoWord = newIndoInput.value.trim().toLowerCase();
+
+        if (!regionalWord || !indoWord) {
+          alert('Mohon isi kata daerah dan terjemahannya.');
+          return;
+        }
+
+        let existing = activeDictionary.find((item) => item['id-ID'] === indoWord);
+        if (existing) {
+          existing[lang] = regionalWord;
+        } else {
+          const newEntry = {
+            id: Date.now().toString(),
+            'id-ID': indoWord,
+            [lang]: regionalWord
+          };
+          activeDictionary.push(newEntry);
+        }
+
+        saveDictionary();
+        newWordInput.value = '';
+        newIndoInput.value = '';
+        modalOverlay.classList.remove('active');
+        translate();
+      });
+    }
+
+    // Helper to format IDR currency cleanly
+    function formatIDR(num) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
+    }
+
+    // Donation Form Handlers (IDR logic)
+    function setFrequency(freq) {
+        currentFrequency = freq;
+        const oneTimeBtn = document.getElementById('freq-one-time');
+        const monthlyBtn = document.getElementById('freq-monthly');
+        const recurringLabel = document.getElementById('recurring-permission-label');
+
+        if (freq === 'one-time') {
+            oneTimeBtn.className = "py-2.5 px-4 text-sm font-medium rounded-xl transition-all bg-white text-emerald-700 shadow-sm";
+            monthlyBtn.className = "py-2.5 px-4 text-sm font-medium rounded-xl transition-all text-slate-600 hover:text-slate-900";
+            recurringLabel.innerText = "Saya menyetujui pemotongan saldo sekali bayar untuk transaksi donasi ini.";
+        } else {
+            monthlyBtn.className = "py-2.5 px-4 text-sm font-medium rounded-xl transition-all bg-white text-emerald-700 shadow-sm";
+            oneTimeBtn.className = "py-2.5 px-4 text-sm font-medium rounded-xl transition-all text-slate-600 hover:text-slate-900";
+            recurringLabel.innerText = "Saya menyetujui pemotongan saldo otomatis bulanan hingga saya memilih berhenti berlangganan.";
+        }
+    }
+
+    function selectAmount(amount) {
+        currentAmount = amount;
+        document.getElementById('custom-amount').value = '';
+        
+        const buttons = document.querySelectorAll('.tier-btn');
+        buttons.forEach(btn => {
+            btn.className = "tier-btn py-3 px-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 font-bold text-slate-700 hover:text-emerald-600 transition-all text-center group bg-white";
+            const subtext = btn.querySelector('span:last-child');
+            if(subtext) subtext.className = "block text-[11px] font-normal text-slate-400 mt-0.5";
+        });
+
+        event.currentTarget.className = "tier-btn py-3 px-4 rounded-2xl border-2 border-emerald-500 font-bold text-emerald-700 bg-emerald-50/50 transition-all text-center group shadow-sm active-tier";
+        const activeSub = event.currentTarget.querySelector('span:last-child');
+        if(activeSub) activeSub.className = "block text-[11px] font-normal text-emerald-600/80 mt-0.5";
+
+        updateButtonLabel();
+    }
+
+    function handleCustomInput(val) {
+        if (val && !isNaN(val) && val > 0) {
+            currentAmount = Number(val);
+            const buttons = document.querySelectorAll('.tier-btn');
+            buttons.forEach(btn => {
+                btn.className = "tier-btn py-3 px-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 font-bold text-slate-700 hover:text-emerald-600 transition-all text-center group bg-white";
+                const subtext = btn.querySelector('span:last-child');
+                if(subtext) subtext.className = "block text-[11px] font-normal text-slate-400 mt-0.5";
+            });
+            updateButtonLabel();
+        }
+    }
+
+    function selectPayment(method) {
+        currentPayment = method;
+        const methods = ['qris', 'transfer', 'ewallet'];
+        methods.forEach(m => {
+            const btn = document.getElementById(`pay-${m}`);
+            if (m === method) {
+                btn.className = "pay-btn flex flex-col items-center justify-center p-3 rounded-2xl border-2 border-emerald-500 bg-emerald-50/40 text-emerald-700 transition-all";
+            } else {
+                btn.className = "pay-btn flex flex-col items-center justify-center p-3 rounded-2xl border-2 border-slate-200 hover:border-slate-300 text-slate-600 transition-all bg-white";
+            }
+        });
+    }
+
+    function updateButtonLabel() {
+        document.getElementById('donate-btn-amount').innerText = formatIDR(currentAmount);
+    }
+
+    function handleDonate() {
+        const termsChecked = document.getElementById('perm-terms').checked;
+        const recurringChecked = document.getElementById('perm-recurring').checked;
+        const errorAlert = document.getElementById('error-alert');
+
+        if (!termsChecked || !recurringChecked) {
+            errorAlert.classList.remove('hidden');
+            return;
+        } else {
+            errorAlert.classList.add('hidden');
+        }
+
+        const amountToDisplay = currentAmount > 0 ? currentAmount : 250000;
+        const freqText = currentFrequency === 'monthly' ? 'bulanan' : '';
+        document.getElementById('success-message').innerText = `Donasi ${freqText} sebesar ${formatIDR(amountToDisplay)} telah berhasil diproses. Terima kasih atas dukungan Anda untuk pelestarian bahasa daerah!`;
+        
+        const modal = document.getElementById('success-modal');
+        const modalContent = document.getElementById('modal-content');
+        modal.style.display = 'flex';
+        setTimeout(() => {
+            modal.classList.remove('hidden');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }, 10);
+    }
+
+    function closeDonationModal() {
+        const modal = document.getElementById('success-modal');
+        const modalContent = document.getElementById('modal-content');
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.style.display = 'none';
+        }, 200);
+    }
+
+    // Text to Speech Helper
+    function speakText(text, langCode) {
+      if (!text) return;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+
+        const languageMap = {
+          'id-ID': 'id-ID',
+          'tj-TJ': 'id-ID',
+          'bq-BQ': 'id-ID',
+          'ky-KY': 'id-ID',
+          'bh-BH': 'id-ID',
+          'kt-KT': 'id-ID'
+        };
+
+        utterance.lang = languageMap[langCode] || 'id-ID';
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // Navigation Tab Switcher
+    function switchTab(tabName) {
+      const tabs = ['donation', 'book', 'proposal'];
+      tabs.forEach((t) => {
+        const btn = document.getElementById(`tab-${t}`);
+        const panel = document.getElementById(`panel-${t}`);
+        if (!btn || !panel) return;
+
+        if (t === tabName) {
+          btn.className = 'tab-btn neu-pressed tab-active-accent flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus:outline-none';
+          btn.setAttribute('aria-selected', 'true');
+          panel.classList.add('active');
+        } else {
+          btn.className = 'tab-btn neu-flat text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus:outline-none';
+          btn.setAttribute('aria-selected', 'false');
+          panel.classList.remove('active');
+        }
+      });
+    }
+
+    // Theme Toggle Function
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const hamburger = document.getElementById('hamburger-icon');
+      const close = document.getElementById('close-icon');
+
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+        hamburger.classList.add('hidden');
+        close.classList.remove('hidden');
+      } else {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+        hamburger.classList.remove('hidden');
+        close.classList.add('hidden');
+      }
+    }
+  </script>
+
+</html>
