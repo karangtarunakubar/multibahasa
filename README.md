@@ -6,12 +6,25 @@ A lightweight, browser-based dictionary and translation interface for documentin
 
 - Translate words between Indonesian and regional languages using the in-browser dictionary.
 - Choose from Indonesian, Tunjung, Benuaq, Kenyah, Bahau, and Kutai.
-- Add vocabulary through the **Tambah Kata** form. Entries are saved in the browser's `localStorage`.
+- Add vocabulary through the Tambah Kata form. New entries update the dictionary immediately in the browser and are stored persistently in `localStorage`.
 - Listen to source and translated text using browser speech synthesis, where supported.
 - Copy translation results, swap languages, and use light or dark mode.
 - Browse the project proposal and donation interface.
 
-> **Translation scope:** This is a dictionary-based word lookup, not a machine-translation service. Results depend on the vocabulary available in the app, and unknown words remain unchanged.
+> Translation scope: This is a dictionary-based word lookup, not a machine-translation service. Results depend on the vocabulary available in the app, and unknown words remain unchanged.
+
+## Add new words
+
+To add a new word:
+
+1. Open the app in the browser.
+2. Go to the Kamus tab.
+3. Click the Tambah Kata button.
+4. Select the regional language.
+5. Enter the local word and its Indonesian meaning.
+6. Save the entry.
+
+Once saved, the new word is available immediately in the current browser session and remains stored locally until the browser storage is cleared.
 
 ## Run locally
 
@@ -24,7 +37,7 @@ For more reliable behavior with browser features, you can serve the repository w
 
 ## Contributing vocabulary
 
-Use **Tambah Kata** in the dictionary tab to add a regional word and its Indonesian meaning. These additions are stored only in the current browser's local storage; they are not automatically submitted to the repository or shared with other users. To contribute vocabulary for everyone, propose changes to the project's dictionary data through a pull request.
+Use Tambah Kata in the dictionary tab to add a regional word and its Indonesian meaning. These additions are stored only in the current browser's local storage; they are not automatically submitted to the repository or shared with other users. To contribute vocabulary for everyone, propose changes to the project's dictionary data through a pull request.
 
 ## Project files
 
