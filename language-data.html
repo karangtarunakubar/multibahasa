@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Bahasa & Kata Baru</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; line-height: 1.5; }
+    h1 { margin-bottom: .25rem; }
+    .muted { opacity: .75; }
+    form, .panel { border: 1px solid #8886; border-radius: 12px; padding: 1rem; margin: 1rem 0; }
+    label { display: grid; gap: .35rem; margin: .8rem 0; font-weight: 600; }
+    input, select, textarea, button { font: inherit; padding: .65rem; border-radius: 8px; border: 1px solid #8888; }
+    textarea { width: 100%; min-height: 150px; box-sizing: border-box; font-family: ui-monospace, monospace; }
+    button { cursor: pointer; }
+    .actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .entry { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid #8884; }
+    .entry small { display: block; opacity: .75; }
+    #status { min-height: 1.5em; }
+  </style>
+</head>
+<body>
+  <p><a href="./index.html">← Kembali ke kamus</a></p>
+  <h1>Data Bahasa & Kata Baru</h1>
+  <p class="muted">Masukkan kosakata dan buat SQL <code>INSERT</code> yang dapat ditinjau sebelum dijalankan pada database Anda.</p>
+
+  <form id="word-form">
+    <label for="language">Bahasa
+      <select id="language" required>
+        <option value="tj-TJ">Tunjung</option>
+        <option value="bq-BQ">Benuaq</option>
+        <option value="ky-KY">Kenyah</option>
+        <option value="bh-BH">Bahau</option>
+        <option value="kt-KT">Kutai</option>
+      </select>
+    </label>
+    <label for="word">Kata daerah
+      <input id="word" name="word" maxlength="120" required placeholder="Contoh: Emooq">
+    </label>
+    <label for="translation">Terjemahan Indonesia
+      <input id="translation" name="translation" maxlength="240" required placeholder="Contoh: tinggi">
+    </label>
+    <div class="actions">
+      <button type="submit">Tambah data & buat SQL</button>
+      <button type="button" id="clear-button">Hapus data lokal</button>
+    </div>
+    <p id="status" role="status" aria-live="polite"></p>
+  </form>
+
+  <section class="panel" aria-labelledby="sql-title">
+    <h2 id="sql-title">SQL yang dihasilkan (SQLite)</h2>
+    <p class="muted">Ini hanya menghasilkan teks SQL—halaman tidak tersambung ke database dan tidak mengeksekusi query.</p>
+    <label for="sql-output">Pernyataan INSERT</label>
+    <textarea id="sql-output" readonly placeholder="SQL INSERT akan muncul di sini"></textarea>
+    <div class="actions">
+      <button type="button" id="copy-button">Salin SQL</button>
+      <button type="button" id="download-button">Unduh SQL</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Kata tersimpan di browser</h2>
+    <p class="muted">Data disimpan di localStorage pada perangkat/browser ini, bukan di server.</p>
+    <div id="word-list"></div>
+  </section>
+
+  <script>
+    const STORAGE_KEY = 'multibahasa_language_words';
+    const languageNames = {
+      'tj-TJ': 'Tunjung', 'bq-BQ': 'Benuaq', 'ky-KY': 'Kenyah',
+      'bh-BH': 'Bahau', 'kt-KT': 'Kutai'
+    };
+    const form = document.getElementById('word-form');
+    const status = document.getElementById('status');
+    const sqlOutput = document.getElementById('sql-output');
+
+    function readWords() {
+      try {
+        const words = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        return Array.isArray(words) ? words : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function sqlString(value) {
+      return "'" + String(value).replaceAll("'", "''") + "'";
+    }
+
+    function makeInsertSql(entry) {
+      return `INSERT INTO language_words (language_code, language_name, word, translation, created_at)\nVALUES (${sqlString(entry.languageCode)}, ${sqlString(entry.languageName)}, ${sqlString(entry.word)}, ${sqlString(entry.translation)}, CURRENT_TIMESTAMP);`;
+    }
+
+    function renderWords() {
+      const container = document.getElementById('word-list');
+      const words = readWords();
+      container.replaceChildren();
+      if (!words.length) {
+        container.textContent = 'Belum ada kata yang disimpan.';
+        return;
+      }
+      words.slice().reverse().forEach((entry) => {
+        const row = document.createElement('div');
+        row.className = 'entry';
+        const text = document.createElement('span');
+        text.textContent = `${entry.word} — ${entry.translation}`;
+        const lang = document.createElement('small');
+        lang.textContent = entry.languageName;
+        text.append(lang);
+        row.append(text);
+        container.append(row);
+      });
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const languageCode = document.getElementById('language').value;
+      const word = document.getElementById('word').value.trim();
+      const translation = document.getElementById('translation').value.trim();
+      if (!word || !translation) return;
+      const entry = { languageCode, languageName: languageNames[languageCode], word, translation };
+      const words = readWords();
+      const duplicate = words.some((item) => item.languageCode === languageCode && item.word.toLocaleLowerCase() === word.toLocaleLowerCase());
+      if (duplicate) {
+        status.textContent = 'Kata tersebut sudah ada untuk bahasa yang dipilih.';
+        return;
+      }
+      words.push(entry);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(words));
+      sqlOutput.value = makeInsertSql(entry);
+      form.reset();
+      status.textContent = 'Data disimpan di browser dan SQL INSERT berhasil dibuat.';
+      renderWords();
+    });
+
+    document.getElementById('copy-button').addEventListener('click', async () => {
+      if (!sqlOutput.value) { status.textContent = 'Belum ada SQL untuk disalin.'; return; }
+      try {
+        await navigator.clipboard.writeText(sqlOutput.value);
+        status.textContent = 'SQL berhasil disalin.';
+      } catch {
+        sqlOutput.select();
+        status.textContent = 'Salin SQL secara manual dari kotak teks.';
+      }
+    });
+
+    document.getElementById('download-button').addEventListener('click', () => {
+      if (!sqlOutput.value) { status.textContent = 'Belum ada SQL untuk diunduh.'; return; }
+      const blob = new Blob([sqlOutput.value + '\n'], { type: 'text/sql;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'new-language-word.sql';
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('clear-button').addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_KEY);
+      sqlOutput.value = '';
+      status.textContent = 'Data lokal pada browser ini telah dihapus.';
+      renderWords();
+    });
+
+    renderWords();
+  </script>
+</body>
+</html>
